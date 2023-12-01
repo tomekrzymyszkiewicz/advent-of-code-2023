@@ -1,14 +1,5 @@
 import re
 
-with open("input.txt", "r") as f:
-    lines = f.readlines()
-
-
-def find_digit(pattern: re.Pattern, numbers_dict: dict, string: str) -> int:
-    digit = pattern.search(string).group()
-    return int(numbers_dict.get(digit, digit))
-
-
 numbers = {
     "one": "1",
     "two": "2",
@@ -22,18 +13,25 @@ numbers = {
     "zero": "0",
 }
 numbers_reversed = {k[::-1]: v for k, v in numbers.items()}
+matching_words = [*numbers.values(), *numbers.keys()]
 
-matching_words = [*map(str, numbers.values()), *numbers.keys()]
-matching_words_reverse = [word[::-1] for word in matching_words]
+pattern = re.compile(r"|".join(matching_words))
+pattern_reversed = re.compile(r"|".join([word[::-1] for word in matching_words]))
 
-pattern = re.compile(r"|".join(map(re.escape, matching_words)))
-pattern_reversed = re.compile(r"|".join(map(re.escape, matching_words_reverse)))
+with open("input.txt", "r") as f:
+    lines = f.readlines()
 
-number = sum(
-    [
-        find_digit(pattern, numbers, line) * 10
-        + find_digit(pattern_reversed, numbers_reversed, line[::-1])
-        for line in lines
-    ]
-)
+
+def find_digit(pattern: re.Pattern, numbers_dict: dict, string: str) -> int:
+    digit = pattern.search(string).group()
+    return int(numbers_dict.get(digit, digit))
+
+
+def get_number(string: str) -> int:
+    return 10 * find_digit(pattern, numbers, string) + +find_digit(
+        pattern_reversed, numbers_reversed, string[::-1]
+    )
+
+
+number = sum(get_number(line) for line in lines)
 print(number)
