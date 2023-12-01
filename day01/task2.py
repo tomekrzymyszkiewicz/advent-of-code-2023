@@ -18,9 +18,6 @@ matching_words = [*numbers.values(), *numbers.keys()]
 pattern = re.compile(r"|".join(matching_words))
 pattern_reversed = re.compile(r"|".join([word[::-1] for word in matching_words]))
 
-with open("input.txt", "r") as f:
-    lines = f.readlines()
-
 
 def find_digit(pattern: re.Pattern, numbers_dict: dict, string: str) -> int:
     digit = pattern.search(string).group()
@@ -32,6 +29,9 @@ def get_number(string: str) -> int:
         pattern_reversed, numbers_reversed, string[::-1]
     )
 
+
+with open("input.txt", "r") as f:
+    lines = f.readlines()
 
 number = sum(get_number(line) for line in lines)
 print(number)
