@@ -28,7 +28,7 @@ def find_digit(pattern: re.Pattern, numbers_dict: dict, string: str) -> int:
 
 
 def get_number(string: str) -> int:
-    return 10 * find_digit(pattern, numbers, string) + +find_digit(
+    return 10 * find_digit(pattern, numbers, string) + find_digit(
         pattern_reversed, numbers_reversed, string[::-1]
     )
 
