@@ -1,4 +1,4 @@
-with open("day05/input.txt", "r") as f:
+with open("input.txt", "r") as f:
     sections = f.read().split("\n\n")
 
 
