@@ -1,4 +1,4 @@
-# Advent of Code 2023
+# 🎄Advent of Code 2023🎄
 My assignments done for Advent of Coding 2023
 ```
          |
