@@ -10,7 +10,7 @@ main_loop_map = [
 main_loop_map[animal_pos[0]][animal_pos[1]] = True
 
 
-def is_connected(curr_pos: [int, int], adj_pos: [int, int]) -> bool:
+def is_connected(curr_pos: list[int], adj_pos: list[int]) -> bool:
     if (
         adj_pos[0] < 0
         or adj_pos[0] >= len(pipe_tiles)
@@ -48,7 +48,7 @@ def is_connected(curr_pos: [int, int], adj_pos: [int, int]) -> bool:
         return False
 
 
-def discover_surroundings(pos: [int, int]) -> None:
+def discover_surroundings(pos: list[int]) -> None:
     to_discover = [pos]
     while to_discover:
         curr_pos = to_discover.pop()
