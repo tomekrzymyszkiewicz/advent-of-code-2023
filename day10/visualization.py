@@ -126,15 +126,15 @@ def replace_S(animal_pos, pipe_tiles_loop):
         pipe_tiles_loop[animal_pos[0]][animal_pos[1]] = "-"
     return pipe_tiles_loop
 
-def print_colored_map(pipe_tiles_loop, internal_tiles_map):
-    chars_map = {'-':'─','|':'│','F':'┌','J':'┘','7':'┐','L':'└',}
+def print_colored_map(pipe_tiles, pipe_tiles_loop, internal_tiles_map):
+    chars_map = {'-':'─','|':'│','F':'┌','J':'┘','7':'┐','L':'└','.':' '}
     for i,row in enumerate(pipe_tiles_loop):
         colored_row = []
         for j,tile in enumerate(row):
             if tile == '.' and internal_tiles_map[i][j]:
                 colored_row.extend([Fore.BLUE,Back.BLUE,tile,Back.RESET,Fore.RESET])
             elif tile == '.':
-                colored_row.append(' ')
+                colored_row.extend([Fore.RED,chars_map.get(pipe_tiles[i][j]),Fore.RESET])
             elif tile in '-|FJ7L':
                 colored_row.extend([Fore.GREEN,chars_map.get(tile),Fore.RESET])
         print(''.join(colored_row))
@@ -147,4 +147,6 @@ pipe_tiles_loop = [
 ]
 pipe_tiles_loop = replace_S(animal_pos, pipe_tiles_loop)
 internal_tiles_map = count_internal_tiles(pipe_tiles_loop)
-print_colored_map(pipe_tiles_loop, internal_tiles_map)
+pipe_tiles = [[*row] for row in pipe_tiles]
+pipe_tiles = replace_S(animal_pos,pipe_tiles)
+print_colored_map(pipe_tiles,pipe_tiles_loop, internal_tiles_map)
