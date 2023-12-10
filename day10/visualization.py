@@ -1,4 +1,4 @@
-from colorama import Fore, Back
+from colorama import Fore, Back, Style
 with open("input.txt", "r") as f:
     pipe_tiles = [line.strip() for line in f.read().strip().splitlines()]
 
@@ -127,15 +127,16 @@ def replace_S(animal_pos, pipe_tiles_loop):
     return pipe_tiles_loop
 
 def print_colored_map(pipe_tiles_loop, internal_tiles_map):
+    chars_map = {'-':'─','|':'│','F':'┌','J':'┘','7':'┐','L':'└',}
     for i,row in enumerate(pipe_tiles_loop):
         colored_row = []
         for j,tile in enumerate(row):
             if tile == '.' and internal_tiles_map[i][j]:
                 colored_row.extend([Fore.BLUE,Back.BLUE,tile,Back.RESET,Fore.RESET])
             elif tile == '.':
-                colored_row.extend([Fore.WHITE,Back.WHITE,tile,Back.RESET,Fore.RESET])
+                colored_row.append(' ')
             elif tile in '-|FJ7L':
-                colored_row.extend([Fore.GREEN,Back.GREEN,tile,Back.RESET,Fore.RESET])
+                colored_row.extend([Fore.GREEN,chars_map.get(tile),Fore.RESET])
         print(''.join(colored_row))
         
 
